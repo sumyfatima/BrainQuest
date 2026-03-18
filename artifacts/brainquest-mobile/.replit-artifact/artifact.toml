@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/mobile/"
+title = "BrainQuest Mobile"
+version = "1.0.0"
+id = "artifacts/brainquest-mobile"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+localPort = 20527
+name = "expo"
+paths = ["/mobile/"]
+
+[services.development]
+run = "pnpm --filter @workspace/brainquest-mobile run dev"
+
+[services.env]
+PORT = "20527"
+BASE_PATH = "/mobile/"
+
+[services.production]
+build = ["pnpm", "--filter", "@workspace/brainquest-mobile", "run", "build"]
+run = ["pnpm", "--filter", "@workspace/brainquest-mobile", "run", "serve"]
