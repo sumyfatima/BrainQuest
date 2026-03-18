@@ -1,0 +1,12 @@
+packages:
+  "framer-motion": "Smooth animations for page transitions, shake effects, and interactive elements"
+  "canvas-confetti": "Confetti particle effects for celebrations and streaks"
+  "@types/canvas-confetti": "Types for canvas-confetti"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility to merge tailwind classes safely"
+
+images: []
+
+notes:
+  - App operates primarily as a single-page state machine (splash -> setup -> quiz -> result) within a mobile-constrained viewport.
+  - Relies on @workspace/api-client-react for useGenerateQuiz mutation.

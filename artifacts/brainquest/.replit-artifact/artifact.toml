@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "BrainQuest"
+version = "1.0.0"
+id = "artifacts/brainquest"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+localPort = 20191
+name = "web"
+paths = ["/"]
+
+[services.development]
+run = "pnpm --filter @workspace/brainquest run dev"
+
+[services.env]
+PORT = "20191"
+BASE_PATH = "/"
+
+[services.production]
+build = ["pnpm", "--filter", "@workspace/brainquest", "run", "build"]
+publicDir = "artifacts/brainquest/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"

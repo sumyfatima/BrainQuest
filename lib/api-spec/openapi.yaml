@@ -1,6 +1,5 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
   description: API specification
@@ -10,6 +9,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: quiz
+    description: Quiz question generation
 paths:
   /healthz:
     get:
@@ -24,6 +25,31 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /quiz/generate:
+    post:
+      operationId: generateQuiz
+      tags: [quiz]
+      summary: Generate quiz questions
+      description: Generates AI-powered quiz questions for a given topic and difficulty
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateQuizRequest"
+      responses:
+        "200":
+          description: Generated quiz questions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateQuizResponse"
+        "500":
+          description: Error generating questions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +59,60 @@ components:
           type: string
       required:
         - status
-
+    GenerateQuizRequest:
+      type: object
+      properties:
+        topic:
+          type: string
+          description: The quiz topic (e.g. Math, Science, Animals)
+        difficulty:
+          type: string
+          enum: [easy, medium, hard]
+          description: Difficulty level
+      required:
+        - topic
+        - difficulty
+    QuizQuestion:
+      type: object
+      properties:
+        question:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+          minItems: 4
+          maxItems: 4
+        correct:
+          type: integer
+          minimum: 0
+          maximum: 3
+        explanation:
+          type: string
+        fun_fact:
+          type: string
+      required:
+        - question
+        - options
+        - correct
+        - explanation
+        - fun_fact
+    GenerateQuizResponse:
+      type: object
+      properties:
+        source_summary:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuizQuestion"
+      required:
+        - source_summary
+        - questions
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error

@@ -5,18 +5,26 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  ErrorResponse,
+  GenerateQuizRequest,
+  GenerateQuizResponse,
+  HealthStatus,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -99,3 +107,90 @@ export function useHealthCheck<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * Generates AI-powered quiz questions for a given topic and difficulty
+ * @summary Generate quiz questions
+ */
+export const getGenerateQuizUrl = () => {
+  return `/api/quiz/generate`;
+};
+
+export const generateQuiz = async (
+  generateQuizRequest: GenerateQuizRequest,
+  options?: RequestInit,
+): Promise<GenerateQuizResponse> => {
+  return customFetch<GenerateQuizResponse>(getGenerateQuizUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(generateQuizRequest),
+  });
+};
+
+export const getGenerateQuizMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof generateQuiz>>,
+    TError,
+    { data: BodyType<GenerateQuizRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof generateQuiz>>,
+  TError,
+  { data: BodyType<GenerateQuizRequest> },
+  TContext
+> => {
+  const mutationKey = ["generateQuiz"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof generateQuiz>>,
+    { data: BodyType<GenerateQuizRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return generateQuiz(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type GenerateQuizMutationResult = NonNullable<
+  Awaited<ReturnType<typeof generateQuiz>>
+>;
+export type GenerateQuizMutationBody = BodyType<GenerateQuizRequest>;
+export type GenerateQuizMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Generate quiz questions
+ */
+export const useGenerateQuiz = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof generateQuiz>>,
+    TError,
+    { data: BodyType<GenerateQuizRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof generateQuiz>>,
+  TError,
+  { data: BodyType<GenerateQuizRequest> },
+  TContext
+> => {
+  return useMutation(getGenerateQuizMutationOptions(options));
+};

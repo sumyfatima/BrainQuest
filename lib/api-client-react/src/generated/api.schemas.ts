@@ -8,3 +8,47 @@
 export interface HealthStatus {
   status: string;
 }
+
+/**
+ * Difficulty level
+ */
+export type GenerateQuizRequestDifficulty =
+  (typeof GenerateQuizRequestDifficulty)[keyof typeof GenerateQuizRequestDifficulty];
+
+export const GenerateQuizRequestDifficulty = {
+  easy: "easy",
+  medium: "medium",
+  hard: "hard",
+} as const;
+
+export interface GenerateQuizRequest {
+  /** The quiz topic (e.g. Math, Science, Animals) */
+  topic: string;
+  /** Difficulty level */
+  difficulty: GenerateQuizRequestDifficulty;
+}
+
+export interface QuizQuestion {
+  question: string;
+  /**
+   * @minItems 4
+   * @maxItems 4
+   */
+  options: string[];
+  /**
+   * @minimum 0
+   * @maximum 3
+   */
+  correct: number;
+  explanation: string;
+  fun_fact: string;
+}
+
+export interface GenerateQuizResponse {
+  source_summary: string;
+  questions: QuizQuestion[];
+}
+
+export interface ErrorResponse {
+  error: string;
+}
