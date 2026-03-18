@@ -43,6 +43,11 @@ export const GenerateQuizResponse = zod.object({
         .number()
         .min(generateQuizResponseQuestionsItemCorrectMin)
         .max(generateQuizResponseQuestionsItemCorrectMax),
+      hint: zod
+        .string()
+        .describe(
+          "A helpful hint to guide the student without giving away the answer",
+        ),
       explanation: zod.string(),
       fun_fact: zod.string(),
     }),

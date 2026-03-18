@@ -87,6 +87,9 @@ components:
           type: integer
           minimum: 0
           maximum: 3
+        hint:
+          type: string
+          description: A helpful hint to guide the student without giving away the answer
         explanation:
           type: string
         fun_fact:
@@ -95,6 +98,7 @@ components:
         - question
         - options
         - correct
+        - hint
         - explanation
         - fun_fact
     GenerateQuizResponse:

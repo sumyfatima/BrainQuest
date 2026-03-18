@@ -23,6 +23,7 @@ Return ONLY a raw JSON object (no markdown fences, no extra text) in this exact 
       "question": "Question text?",
       "options": ["A text", "B text", "C text", "D text"],
       "correct": 0,
+      "hint": "A helpful hint that guides toward the answer without spoiling it",
       "explanation": "Fun 1-2 sentence explanation of why this is correct, with an interesting fact.",
       "fun_fact": "A bonus wow fact related to this question!"
     }
@@ -31,7 +32,8 @@ Return ONLY a raw JSON object (no markdown fences, no extra text) in this exact 
 Make questions fun, age-appropriate, and genuinely educational. Mix engaging and informative questions.
 For easy difficulty: use well-known, straightforward facts.
 For medium difficulty: use interesting facts that require some thought.
-For hard difficulty: use challenging facts that test deeper knowledge.`;
+For hard difficulty: use challenging facts that test deeper knowledge.
+Hints should be clever nudges (e.g., "Think about the part of the plant that stores water" for a cactus question).`;
 
   const userPrompt = `Create 6 ${difficulty} difficulty quiz questions about "${topic}" for kids aged 7-13.
 Make the questions engaging, accurate, and varied — include facts kids would find amazing!`;

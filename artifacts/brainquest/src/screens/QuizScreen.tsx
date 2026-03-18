@@ -22,6 +22,7 @@ export function QuizScreen({
   const [qIndex, setQIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [answered, setAnswered] = useState(false);
+  const [showHint, setShowHint] = useState(false);
   
   // Game Stats
   const [score, setScore] = useState(0);
@@ -108,6 +109,7 @@ export function QuizScreen({
       setQIndex((i) => i + 1);
       setSelected(null);
       setAnswered(false);
+      setShowHint(false);
     }
   };
 
@@ -212,6 +214,26 @@ export function QuizScreen({
                 {currentQ.question}
               </h2>
             </motion.div>
+
+            {/* Hint Button */}
+            {!answered && (
+              <button
+                onClick={() => setShowHint(!showHint)}
+                className="w-full mb-4 px-4 py-3 rounded-lg font-bold text-white transition-all"
+                style={{ backgroundColor: topic.gradient[0] }}
+              >
+                💡 {showHint ? "Hide Hint" : "Get a Hint"}
+              </button>
+            )}
+
+            {/* Hint Display */}
+            {showHint && !answered && (
+              <div className="mb-4 p-4 rounded-lg border-2 border-yellow-400/40 bg-yellow-400/10">
+                <p className="text-sm text-yellow-300 font-medium">
+                  💭 {currentQ.hint}
+                </p>
+              </div>
+            )}
 
             {/* Options */}
             <div className="flex flex-col gap-3">

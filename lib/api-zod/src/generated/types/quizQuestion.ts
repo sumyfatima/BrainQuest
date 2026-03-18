@@ -18,6 +18,8 @@ export interface QuizQuestion {
    * @maximum 3
    */
   correct: number;
+  /** A helpful hint to guide the student without giving away the answer */
+  hint: string;
   explanation: string;
   fun_fact: string;
 }

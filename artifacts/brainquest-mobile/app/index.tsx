@@ -23,6 +23,7 @@ interface QuizQuestion {
   question: string;
   options: string[];
   correct: number;
+  hint: string;
   explanation: string;
   fun_fact: string;
 }
@@ -79,6 +80,7 @@ export default function BrainQuestApp() {
   const [loadMsg, setLoadMsg] = useState("");
   const [history, setHistory] = useState<Array<{ question: string; correct: boolean; topic: string }>>([]);
   const [aiSource, setAiSource] = useState("");
+  const [showHint, setShowHint] = useState(false);
 
   // Refs
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -212,6 +214,7 @@ export default function BrainQuestApp() {
       setQIndex((i) => i + 1);
       setSelected(null);
       setAnswered(false);
+      setShowHint(false);
     }
   };
 
@@ -400,6 +403,21 @@ export default function BrainQuestApp() {
               </Text>
               <Text style={styles.qText}>{currentQ.question}</Text>
             </View>
+
+            {!answered && (
+              <TouchableOpacity
+                onPress={() => setShowHint(!showHint)}
+                style={[styles.hintButton, { backgroundColor: topic?.color || "#4776e6" }]}
+              >
+                <Text style={styles.hintButtonText}>💡 {showHint ? "Hide Hint" : "Get a Hint"}</Text>
+              </TouchableOpacity>
+            )}
+
+            {showHint && !answered && (
+              <View style={[styles.hintCard, { backgroundColor: "#FFD93D18", borderColor: "#FFD93D66" }]}>
+                <Text style={styles.hintText}>💭 {currentQ.hint}</Text>
+              </View>
+            )}
 
             {currentQ.options.map((opt: string, i: number) => {
               const isCorrect = i === currentQ.correct;
@@ -1050,5 +1068,33 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#ccc",
     lineHeight: 20,
+  },
+
+  hintButton: {
+    marginVertical: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  hintButtonText: {
+    color: "#fff",
+    fontWeight: "800",
+    fontSize: 14,
+  },
+
+  hintCard: {
+    marginVertical: 10,
+    borderRadius: 14,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    borderWidth: 2,
+  },
+  hintText: {
+    fontSize: 14,
+    color: "#FFD93D",
+    lineHeight: 20,
+    fontWeight: "600",
   },
 });
