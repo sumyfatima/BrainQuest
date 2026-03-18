@@ -1,0 +1,20 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "Y-W3whuh7awe2Vk1SpUP2"
+uri = "file://artifacts/brainquest-web-build.tar.gz"
+type = "unspecified"
+title = "BrainQuest Web App (Production Build)"
+
+[[outputs]]
+id = "0xk-kjbFRRsRiCtRhCVh9"
+uri = "file://artifacts/brainquest-mobile-source.tar.gz"
+type = "unspecified"
+title = "BrainQuest Mobile App (Expo Source Code)"
+
+[[outputs]]
+id = "UPUn4KSFNiecoXGYqeJKo"
+uri = "file://artifacts/brainquest-api-server.tar.gz"
+type = "unspecified"
+title = "BrainQuest API Server (Backend)"
