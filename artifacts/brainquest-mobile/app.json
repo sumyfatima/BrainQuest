@@ -14,9 +14,16 @@
       "backgroundColor": "#0d0d1a"
     },
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.brainquest.mobile"
     },
-    "android": {},
+    "android": {
+      "package": "com.brainquest.mobile",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#0d0d1a"
+      }
+    },
     "web": {
       "favicon": "./assets/images/icon.png"
     },
@@ -33,6 +40,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b120475c-910a-4a67-bb61-57cc12398d60"
+      }
+    },
+    "owner": "sumyfatima"
   }
 }

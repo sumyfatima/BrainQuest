@@ -18,3 +18,9 @@ id = "UPUn4KSFNiecoXGYqeJKo"
 uri = "file://artifacts/brainquest-api-server.tar.gz"
 type = "unspecified"
 title = "BrainQuest API Server (Backend)"
+
+[[outputs]]
+id = "64DBA_hh7DejHqMkZ3DEN"
+uri = "file://artifacts/ANDROID_BUILD_README.md"
+type = "text"
+title = "Android Build Instructions"
