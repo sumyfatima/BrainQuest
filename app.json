@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "c36c761a-b44c-46c3-a6c2-960c264eb382"
+      }
+    },
+    "android": {
+      "package": "com.sumyfatima.workspace"
+    }
+  }
+}
