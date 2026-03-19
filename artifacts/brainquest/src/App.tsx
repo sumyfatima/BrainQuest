@@ -45,6 +45,7 @@ function BrainQuestGame() {
       question: `Interesting fallback question #${i + 1} about ${topicLabel}?`,
       options: ["Option A", "Option B", "Option C", "Option D"],
       correct: i % 4,
+      hint: `Consider the main aspects of ${topicLabel} to find the answer.`,
       explanation: `This is a generated fallback explanation because the AI request failed. Learning about ${topicLabel} is fun!`,
       fun_fact: `Did you know ${topicLabel} is fascinating?`
     }));

@@ -83,7 +83,7 @@ export default function BrainQuestApp() {
   const [showHint, setShowHint] = useState(false);
 
   // Refs
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
 
@@ -166,6 +166,7 @@ export default function BrainQuestApp() {
           question: `Fun question #${i + 1} about ${topicObj.label}?`,
           options: ["Answer A", "Answer B", "Answer C", "Answer D"],
           correct: i % 4,
+          hint: `Think carefully about the key aspects of ${topicObj.label}.`,
           explanation: `This is a great fact about ${topicObj.label}!`,
           fun_fact: `Did you know ${topicObj.label} is fascinating?`,
         }));
